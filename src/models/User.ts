@@ -1,13 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import { IUser } from "@/types/User";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-interface IUser {
-  username: string;
-  email: string;
-  password: string;
-  role?: "admin" | "user";
-}
 
 const userSchema: Schema = new Schema(
   {
