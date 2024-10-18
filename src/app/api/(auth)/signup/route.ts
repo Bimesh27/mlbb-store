@@ -3,6 +3,7 @@ import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { SignupRequestBody } from "@/types/User";
+import { generateTokenAndSetCookie } from "@/utils/token";
 
 export async function POST(request: Request) {
   await connectDB();
@@ -13,6 +14,26 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message: "All fields are required",
+        success: false,
+      },
+      { status: 400 }
+    );
+  }
+
+  if (username.length < 3 || username.length > 16) {
+    return NextResponse.json(
+      {
+        message: "Username must be between 3 to 16 character long",
+        success: false,
+      },
+      { status: 400 }
+    );
+  }
+
+  if (password.length < 6 || password.length > 20) {
+    return NextResponse.json(
+      {
+        message: "Password must be between 6-20 character long",
         success: false,
       },
       { status: 400 }
@@ -39,6 +60,13 @@ export async function POST(request: Request) {
     });
 
     await newUser.save();
+
+    const tokenPayload = {
+      id: newUser._id,
+      username: newUser.username,
+    };
+
+    generateTokenAndSetCookie(tokenPayload);
 
     return NextResponse.json(
       {

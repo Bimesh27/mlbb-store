@@ -8,7 +8,7 @@ const userSchema: Schema = new Schema(
     username: {
       type: String,
       required: true,
-      minLength: [4, "Username should be atleast 4 character long."],
+      minLength: [3, "Username should be atleast 3 character long."],
       maxLength: [16, "Username cannot exceed 16 character."],
     },
     email: {
@@ -23,8 +23,6 @@ const userSchema: Schema = new Schema(
     password: {
       type: String,
       required: true,
-      minLength: [6, "Password should be atleast be 6 char"],
-      maxLength: [20, "Password should be no more than 20 character"],
     },
     role: {
       type: String,
@@ -35,5 +33,5 @@ const userSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const User = mongoose.models.user || mongoose.model<IUser>("User", userSchema);
+const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 export default User;
