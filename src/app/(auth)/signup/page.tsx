@@ -69,7 +69,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-white text-violet-600">
+    <div className="w-full h-screen flex justify-center items-center bg-white text-blue-600">
       <div className="w-[40%] max-lg:w-full h-[70%] border shadow-2xl rounded-xl flex flex-col items-center sm:p-10 gap-3 max-sm:justify-center max-sm:h-full sm:mt-10">
         <FaFantasyFlightGames className="text-5xl" />
         <h1 className="font-semibold text-3xl">Create new account</h1>
@@ -143,7 +143,7 @@ export default function SignupPage() {
           )}
           <Button
             type="submit"
-            className="bg-violet-600 hover:bg-violet-700 transition-all mt-4 rounded-xl"
+            className="bg-blue-600 hover:bg-blue-700 transition-all mt-4 rounded-xl"
             disabled={loading}
           >
             {loading ? "Signing up..." : "Sign up"}
