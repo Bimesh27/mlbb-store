@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import { ToastContainer } from "react-toastify";
-import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -43,8 +42,7 @@ export default function RootLayout({
         </div>
         {children}
         {/* </ThemeProvider> */}
-        {/* <ToastContainer /> */}
-        <Toaster/>
+        <ToastContainer autoClose={2000}/>
       </body>
     </html>
   );
