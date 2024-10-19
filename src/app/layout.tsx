@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         > */}
-        <div>
+        <div className="mb-[4rem]">
           <Navbar />
         </div>
         {children}
