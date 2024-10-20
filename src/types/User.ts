@@ -25,3 +25,11 @@ export interface jwtPayload {
   id: string;
   username: string;
 }
+
+export interface IUserPost extends Document {
+  title: string;
+  image: string;
+  description: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
