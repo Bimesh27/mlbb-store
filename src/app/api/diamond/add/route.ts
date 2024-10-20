@@ -2,7 +2,7 @@ import Diamond from "@/models/Diamond";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   await connectDB();
   const { amount, price, bonus } = await request.json();
   if (!amount || !price) {

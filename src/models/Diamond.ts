@@ -14,7 +14,7 @@ const diamondSchema: Schema = new Schema({
     type: Number,
     default: 0,
   },
-});
+},{ timestamps: true });
 
 const Diamond =
   mongoose.models.Diamond || mongoose.model<IDiamond>("Diamond", diamondSchema);

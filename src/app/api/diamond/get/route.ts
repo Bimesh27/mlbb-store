@@ -2,7 +2,7 @@ import Diamond from "@/models/Diamond";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   await connectDB();
 
   try {
