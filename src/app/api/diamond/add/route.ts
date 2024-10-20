@@ -1,9 +1,23 @@
 import Diamond from "@/models/Diamond";
 import connectDB from "@/utils/db";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+import User from "@/models/User";
+import { jwtPayload } from "@/types/User";
+import { checkAdmin } from "@/utils/checkAdmin";
 
 export async function POST(request: Request): Promise<NextResponse> {
   await connectDB();
+
+  const isAdmin = await checkAdmin();
+  if (isAdmin.status !== 200) {
+    return NextResponse.json(
+      { message: isAdmin.message },
+      { status: isAdmin.status }
+    );
+  }
+
   const { amount, price, bonus } = await request.json();
   if (!amount || !price) {
     return NextResponse.json(

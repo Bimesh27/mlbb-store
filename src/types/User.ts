@@ -20,3 +20,8 @@ export interface LoginRequestBody {
   email: string;
   password: string;
 }
+
+export interface jwtPayload {
+  id: string;
+  username: string;
+}

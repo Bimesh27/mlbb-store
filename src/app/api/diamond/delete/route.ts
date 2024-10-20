@@ -1,11 +1,21 @@
 import Diamond from "@/models/Diamond";
+import { checkAdmin } from "@/utils/checkAdmin";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request: Request): Promise<NextResponse> {
   await connectDB();
+
+  const isAdmin = await checkAdmin();
+  if (isAdmin.status !== 200) {
+    return NextResponse.json(
+      { message: isAdmin.message },
+      { status: isAdmin.status }
+    );
+  }
+  
   try {
-    const {searchParams} = new URL(request.url);
+    const { searchParams } = new URL(request.url);
     const diamondId = searchParams.get("id");
 
     if (!diamondId) {
