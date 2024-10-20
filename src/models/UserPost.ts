@@ -1,7 +1,7 @@
 import { IUserPost } from "@/types/User";
 import mongoose, { Schema } from "mongoose";
 
-const userPostSchema = new Schema(
+const userPostSchema: Schema<IUserPost> = new Schema(
   {
     title: {
       type: String,
@@ -14,13 +14,13 @@ const userPostSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
       maxLength: [100, "Description cannot be more than 100 characters"],
     },
-    user: {
+    createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",
-    }
+      required: true,
+    },
   },
   { timestamps: true }
 );

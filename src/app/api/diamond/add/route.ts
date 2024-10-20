@@ -1,10 +1,6 @@
 import Diamond from "@/models/Diamond";
 import connectDB from "@/utils/db";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import User from "@/models/User";
-import { jwtPayload } from "@/types/User";
 import { checkAdmin } from "@/utils/checkAdmin";
 
 export async function POST(request: Request): Promise<NextResponse> {

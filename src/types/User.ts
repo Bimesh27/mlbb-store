@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 //types for mongo Schema
 export interface IUser extends Document {
@@ -30,6 +30,7 @@ export interface IUserPost extends Document {
   title: string;
   image: string;
   description: string;
+  createdBy: Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -1,7 +1,7 @@
 import { IDiamond } from "@/types/Diamond";
 import mongoose, { Schema } from "mongoose";
 
-const diamondSchema: Schema = new Schema({
+const diamondSchema: Schema<IDiamond> = new Schema({
   amount: {
     type: Number,
     required: true,

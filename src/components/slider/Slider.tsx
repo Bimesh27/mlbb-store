@@ -36,6 +36,7 @@ const Slider = () => {
                   // Set a fixed height for the Image component
                   width={1920}
                   height={1080}
+                  priority
                 />
               </div>
             </SwiperSlide>

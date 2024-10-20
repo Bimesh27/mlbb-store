@@ -3,7 +3,7 @@ import { IUser } from "@/types/User";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const userSchema: Schema = new Schema(
+const userSchema: Schema<IUser> = new Schema(
   {
     username: {
       type: String,
