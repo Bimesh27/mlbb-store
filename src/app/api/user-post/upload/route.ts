@@ -31,7 +31,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       title,
       image: imageUrl,
       description,
-      user: user._id,
+      createdBy: user._id,
     });
 
     await newUserPost.save();
