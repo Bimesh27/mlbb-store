@@ -1,4 +1,4 @@
-import cloudinary from "@/lib/cloudinary";
+import cloudinary from "@/utils/cloudinary";
 import UserPost from "@/models/UserPost";
 import { authencateUser } from "@/utils/checkAuth";
 import connectDB from "@/utils/db";

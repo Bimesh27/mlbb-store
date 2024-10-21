@@ -1,7 +1,7 @@
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 import UserPost from "@/models/UserPost";
-import cloudinary from "@/lib/cloudinary";
+import cloudinary from "@/utils/cloudinary";
 import { authencateUser } from "@/utils/checkAuth";
 
 export async function POST(request: Request): Promise<NextResponse> {
