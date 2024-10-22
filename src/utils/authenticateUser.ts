@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import { jwtPayload } from "@/types/User";
 import User from "@/models/User";
 
-export async function authencateUser() {
-  const cookieStore = cookies();
+export async function authenticateUser() {
+  const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
   if (!token) {
     return { user: null, message: "Unauthorized: token missing" };

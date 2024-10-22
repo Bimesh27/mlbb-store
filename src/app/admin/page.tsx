@@ -1,8 +1,11 @@
+import Sidebar from '@/components/Sidebar'
 import React from 'react'
 
 const AdminPage = () => {
   return (
-    <div>AdminPage</div>
+    <div className='min-h-screen w-full relative'>
+      <Sidebar/>
+    </div>
   )
 }
 

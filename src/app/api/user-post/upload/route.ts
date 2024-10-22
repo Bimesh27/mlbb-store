@@ -2,12 +2,12 @@ import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 import UserPost from "@/models/UserPost";
 import cloudinary from "@/utils/cloudinary";
-import { authencateUser } from "@/utils/checkAuth";
+import { authenticateUser } from "@/utils/authenticateUser";
 
 export async function POST(request: Request): Promise<NextResponse> {
   await connectDB();
 
-  const { user, error } = await authencateUser();
+  const { user, error } = await authenticateUser();
   if (!user) {
     return NextResponse.json({ message: error }, { status: 401 });
   }

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   try {
     const { price, description, images } = await request.json();
     if (!price || !description || !images || images.length === 0) {
-      return new Response("Please provide all fields", { status: 400 });
+      return NextResponse.json("Please provide all fields", { status: 400 });
     }
 
     const imageUrls = [];
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     const newAccount = new MlAccount({
       price,
       description,
-      images : imageUrls,
+      images: imageUrls,
     });
 
     await newAccount.save();

@@ -1,13 +1,13 @@
 import cloudinary from "@/utils/cloudinary";
 import UserPost from "@/models/UserPost";
-import { authencateUser } from "@/utils/checkAuth";
+import { authenticateUser } from "@/utils/authenticateUser";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request: Request) {
   await connectDB();
 
-  const { user, error } = await authencateUser();
+  const { user, error } = await authenticateUser();
   if (!user) {
     return NextResponse.json({ message: error }, { status: 401 });
   }
