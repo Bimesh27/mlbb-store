@@ -64,6 +64,7 @@ export async function POST(request: Request) {
       {
         message: "Login Successful",
         success: true,
+        data: user,
       },
       { status: 200 }
     );

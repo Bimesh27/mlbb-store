@@ -19,7 +19,17 @@ export async function GET() {
   }
 
   return NextResponse.json(
-    { message: "User found", data: user },
+    {
+      message: "User found",
+      success: true,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        profilePicture: user.profilePicture,
+      },
+    },
     { status: 200 }
   );
 }

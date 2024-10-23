@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { SignupRequestBody } from "@/types/User";
 import { generateTokenAndSetCookie } from "@/utils/token";
 
+
 export async function POST(request: Request) {
   await connectDB();
 
@@ -53,10 +54,15 @@ export async function POST(request: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const randomSeed = Math.random().toString(36).substring(7);
+    const profilePicture = `https://api.dicebear.com/7.x/avataaars/svg?seed=${randomSeed}`;
+
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
+      profilePicture,
     });
 
     await newUser.save();
@@ -76,6 +82,7 @@ export async function POST(request: Request) {
           id: newUser._id,
           username: newUser.username,
           email: newUser.email,
+          profilePicture: newUser.profilePicture,
         },
       },
       { status: 201 }

@@ -5,10 +5,9 @@ import axios from "axios";
 import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash, FaFantasyFlightGames } from "react-icons/fa";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SignupPage() {
