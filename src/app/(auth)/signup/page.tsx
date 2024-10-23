@@ -69,7 +69,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-white text-blue-600">
+    <div className="w-full h-screen flex justify-center items-center text-white">
       <div className="w-[40%] max-lg:w-full h-[70%] border shadow-2xl rounded-xl flex flex-col items-center sm:p-10 gap-3 max-sm:justify-center max-sm:h-full sm:mt-10">
         <FaFantasyFlightGames className="text-5xl" />
         <h1 className="font-semibold text-3xl">Create new account</h1>
@@ -80,7 +80,7 @@ export default function SignupPage() {
               type="text"
               name="username"
               placeholder="Enter Username"
-              className="outline-none w-56"
+              className="outline-none w-56 bg-transparent"
               required
               onChange={handleChange}
             />
@@ -91,7 +91,7 @@ export default function SignupPage() {
               type="email"
               name="email"
               placeholder="Enter Email"
-              className="outline-none w-56"
+              className="outline-none w-56 bg-transparent"
               required
               onChange={handleChange}
             />
@@ -102,7 +102,7 @@ export default function SignupPage() {
               type={`${showPassword ? "text" : "password"}`}
               placeholder="Enter Password"
               name="password"
-              className="outline-none w-56"
+              className="outline-none w-56 bg-transparent"
               required
               onChange={handleChange}
             />
@@ -123,7 +123,7 @@ export default function SignupPage() {
               type={`${showConfirmPass ? "text" : "password"}`}
               placeholder="Confirm Password"
               name="confirmPassword"
-              className="outline-none w-56 "
+              className="outline-none w-56 bg-transparent"
               required
               onChange={handleChange}
             />
@@ -151,7 +151,7 @@ export default function SignupPage() {
         </form>
         <p className="font-medium text-sm">
           Alreay have an account ?{" "}
-          <Link href={"/login"} className="text-black">
+          <Link href={"/login"}>
             Login here
           </Link>
         </p>

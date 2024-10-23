@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import { ToastContainer } from "react-toastify";
 
@@ -29,20 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiase`}
       >
-        {/* <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        > */}
         <div className="mb-[4rem]">
           <Navbar />
         </div>
         {children}
-        {/* </ThemeProvider> */}
-        <ToastContainer autoClose={2000}/>
+        <ToastContainer autoClose={2000} />
       </body>
     </html>
   );

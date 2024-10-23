@@ -22,7 +22,7 @@ const Slider = () => {
           modules={[Autoplay]}
           autoplay={{
             delay: 3000,
-            disableOnInteraction: false, // Consider setting this to false for continuous autoplay
+            disableOnInteraction: false,
           }}
           className="mySwiper cursor-pointer w-full"
         >
@@ -30,13 +30,13 @@ const Slider = () => {
             <SwiperSlide key={index}>
               <div className="w-full flex justify-center">
                 <Image
+                  rel="values"
                   src={image}
                   alt={`Slide ${index + 1}`}
                   className="w-[80%] object-cover max-sm:w-full h-auto"
-                  // Set a fixed height for the Image component
                   width={1920}
                   height={1080}
-                  priority
+                  priority // Ensures the image is loaded as soon as possible
                 />
               </div>
             </SwiperSlide>

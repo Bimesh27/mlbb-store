@@ -15,7 +15,7 @@ export async function GET(): Promise<NextResponse> {
     }
 
     return NextResponse.json(
-      { message: "Diamonds retrieved successfully", data: diamonds },
+      { message: "Diamonds retrieved successfully", success: true, diamonds },
       { status: 200 }
     );
   } catch (error: unknown) {

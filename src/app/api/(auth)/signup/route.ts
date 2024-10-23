@@ -5,8 +5,19 @@ import bcrypt from "bcryptjs";
 import { SignupRequestBody } from "@/types/User";
 import { generateTokenAndSetCookie } from "@/utils/token";
 
-
 export async function POST(request: Request) {
+  const pictures = [
+    "https://i.pinimg.com/564x/6e/cc/0b/6ecc0b98cb00db741ce2316fe40f78fc.jpg",
+    "https://i.pinimg.com/564x/b7/d9/d6/b7d9d6cce20fd726dc8a6e2fbddbffb5.jpg",
+    "https://i.pinimg.com/564x/11/e8/fd/11e8fd42de7a3f8b91c868b024b19c4d.jpg",
+    "https://i.pinimg.com/564x/ac/19/30/ac19304890f098c266c830cc16e49745.jpg",
+    "https://i.pinimg.com/564x/0a/ad/5b/0aad5b39e58688d59267569833cba98e.jpg",
+    "https://i.pinimg.com/564x/9c/0b/67/9c0b67f8712e15ea4b01484e4830c6f9.jpg",
+    "https://i.pinimg.com/564x/30/b4/78/30b4786b5a0eab31490d57cdf8f23655.jpg",
+    "https://i.pinimg.com/564x/83/dd/27/83dd27fc821e0df1ec06c3ff4e39a318.jpg",
+    "https://i.pinimg.com/564x/b4/91/fb/b491fbdce9f52c9a72a6380c829ef2db.jpg",
+  ];
+
   await connectDB();
 
   const { username, email, password }: SignupRequestBody = await request.json();
@@ -55,8 +66,8 @@ export async function POST(request: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const randomSeed = Math.random().toString(36).substring(7);
-    const profilePicture = `https://api.dicebear.com/7.x/avataaars/svg?seed=${randomSeed}`;
+    const randomProfile = Math.floor(Math.random() * pictures.length);
+    const profilePicture = pictures[randomProfile];
 
     const newUser = new User({
       username,

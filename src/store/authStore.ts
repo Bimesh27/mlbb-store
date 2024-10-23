@@ -2,6 +2,7 @@ import axios from "axios";
 import { create } from "zustand";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { redirect } from "next/navigation";
 
 interface User {
   id: string;
@@ -64,7 +65,7 @@ const useAuthStore = create<AuthState>((set) => ({
       if (response?.data?.success) {
         set({ user: response?.data?.user });
         toast.success(response?.data?.message || "Login successful!");
-
+        redirect("/");
         return Promise.resolve();
       } else {
         throw new Error(response?.data?.message);
