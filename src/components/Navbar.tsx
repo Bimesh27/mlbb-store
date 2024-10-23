@@ -24,7 +24,7 @@ const Navbar = () => {
   console.log(pathname);
 
   return (
-    <nav className="flex items-center justify-between px-12 py-4 top-0 w-full h-16 fixed border-b border-[#b4b3b34b] z-50">
+    <nav className="flex items-center justify-between px-12 py-4 top-0 w-full h-16 fixed border-b border-[#b4b3b34b] z-50 bg-black">
       <Link href={"/"}>
         <FaFantasyFlightGames className="text-4xl text-white" />
       </Link>

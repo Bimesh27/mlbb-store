@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { create } from "zustand";
 
 interface Diamond {
-  id: string;
+  _id: string;
   amount: number;
   price: number;
   bonus?: number;
@@ -36,7 +36,7 @@ export const useDiamondStore = create<DiamondState>((set) => ({
           diamonds: response.data.diamonds,
           error: null,
         });
-        toast.success("Diamonds retrieved successfully!");
+        // toast.success("Diamonds retrieved successfully!");
       } else {
         throw new Error(response.data.message || "Failed to retrieve diamonds");
       }

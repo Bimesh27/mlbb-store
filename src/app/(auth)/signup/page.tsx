@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash, FaFantasyFlightGames } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -51,6 +52,7 @@ export default function SignupPage() {
 
       if (response.data && response.data.success) {
         toast.success("Signup successful");
+        redirect("/");
       }
     } catch (error: any) {
       // console.error("Signup failed. Please try again.");

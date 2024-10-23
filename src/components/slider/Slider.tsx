@@ -14,8 +14,8 @@ const images = [
 
 const Slider = () => {
   return (
-    <div className="flex w-full gap-10 justify-center max-sm:flex-col bg-background ">
-      <div className="w-full max-w-5xl flex flex-col justify-between md:flex-row gap-8 md:gap-4 overflow-x-hidden ">
+    <div className="flex gap-10 justify-center max-sm:flex-col bg-background w-full">
+      <div className="w-full max-w-5xl flex flex-col justify-between md:flex-row gap-8 md:gap-4 overflow-x-hidden">
         <Swiper
           spaceBetween={30}
           loop={true}
