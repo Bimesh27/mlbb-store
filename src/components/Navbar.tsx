@@ -9,19 +9,33 @@ import { ThemeProvider } from "./theme-provider";
 import { ModeToggle } from "./Themetoggle";
 
 const Navbar = () => {
-  const { user, getCurrentUser } = useAuthStore();
-  // const [isLoading, setIsLoading] = useState(true); // Local loading state
+  const { user, getCurrentUser, loading } = useAuthStore();
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
+      setIsMounted(true);
       await getCurrentUser();
       // setIsLoading(false); // Set loading to false after fetching
     };
     fetchUser();
   }, [getCurrentUser]);
 
+  
   const pathname: string = usePathname();
   console.log(pathname);
+
+  if(!isMounted) {
+    return null;
+  }
+
+  if(loading) {
+    return (
+      <div className="h-screen w-full justify-center items-center">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <nav className="flex items-center justify-between px-12 py-4 top-0 w-full h-16 fixed border-b border-[#b4b3b34b] z-50 bg-black">
@@ -29,14 +43,6 @@ const Navbar = () => {
         <FaFantasyFlightGames className="text-4xl text-white" />
       </Link>
       <div className="flex gap-5 text-white justify-center max-sm:text-sm max-sm:gap-0">
-        <Link
-          href={"/"}
-          className={`rounded-full px-4 py-2 font-medium ${
-            pathname === "/" ? "text-black bg-white" : ""
-          }`}
-        >
-          Home
-        </Link>
         <Link
           href={"/topup"}
           className={`rounded-full px-4 py-2 font-medium ${
@@ -60,6 +66,14 @@ const Navbar = () => {
           }`}
         >
           Posts
+        </Link>
+        <Link
+          href={"/upload"}
+          className={`rounded-full px-4 py-2 font-medium ${
+            pathname === "/upload" ? "text-black bg-white" : ""
+          }`}
+        >
+          Upload
         </Link>
       </div>
       <div>
