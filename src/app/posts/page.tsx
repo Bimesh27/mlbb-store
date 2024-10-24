@@ -1,36 +1,51 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { userPostStore } from "@/store/postStore";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const UserPost = () => {
-  const { posts, getPost } = userPostStore();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { posts, getPost, loading } = userPostStore();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(true);
+    setIsMounted(true);
     getPost();
   }, [userPostStore]);
   console.log(posts);
-  
-  if(!isLoaded) {
-    return <div className="h-screen w-full justify-center items-center">
-      <h1>Loading...</h1>
-    </div>
+
+  if (!isMounted) {
+    return null;
+  }
+
+  if (loading) {
+    return (
+      <div className="h-screen w-full justify-center items-center">
+        <h1>Loading...</h1>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h[(100vh-4rem)] text-white">
-      {/* <h1>user Post</h1> */}
+    <div className="min-h-[calc(100vh-4rem)] text-white gradient-bg w-full flex  items-center flex-col">
       {posts.map((post) => (
-        <Card key={post._id} className="max-w-fit">
-          <CardTitle>{post.title}</CardTitle>
-          <CardContent>
-            <img src={post.image} alt={post.title} />
-          </CardContent>
-          <CardDescription>{post.description}</CardDescription>
-        </Card>
+        <div
+          key={post._id}
+          className=" w-fit p-4 gap-2 flex flex-col bg-[#131313] h-fit border-b border-[#dafafa5b]"
+        >
+          <Link href={`profile/${post.createdBy._id}`}>
+            <div className="flex gap-2 items-center">
+              <img
+                src={post?.createdBy?.profilePicture}
+                alt=""
+                className="w-12 h-12 rounded-full"
+              />
+              <h1 className="font-semibold">{post?.createdBy?.username}</h1>
+            </div>
+          </Link>
+          <h1>{post.description}</h1>
+          <img src={post.image} className="rounded-xl w-96 sm:w-[30rem] h-auto" />
+        </div>
       ))}
     </div>
   );

@@ -38,7 +38,7 @@ const TopupPage = () => {
   }
 
   return (
-    <div className="text-white min-h-[calc(100vh-4rem)] flex flex-col items-center pb-8 md:py-8">
+    <div className="text-white min-h-[calc(100vh-4rem)] flex flex-col items-center pb-8 md:py-8 ">
       {/* Slider Section */}
       <div className="w-full mb-8">
         <Slider />

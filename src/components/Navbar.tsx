@@ -28,7 +28,7 @@ const Navbar = () => {
       <Link href={"/"}>
         <FaFantasyFlightGames className="text-4xl text-white" />
       </Link>
-      <div className="flex gap-5 max-md:hidden text-white">
+      <div className="flex gap-5 text-white justify-center max-sm:text-sm max-sm:gap-0">
         <Link
           href={"/"}
           className={`rounded-full px-4 py-2 font-medium ${

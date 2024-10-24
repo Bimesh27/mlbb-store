@@ -6,6 +6,13 @@ interface Post {
   title: string;
   image: string;
   description: string;
+  createdBy: {
+    _id: string;
+    username: string;
+    email: string;
+    profilePicture: string;
+    role: string;
+  }
 }
 
 interface UserPostState {
