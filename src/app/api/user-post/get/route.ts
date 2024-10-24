@@ -8,7 +8,10 @@ export async function GET() {
   try {
     const usersPosts = await UserPost.find().populate("createdBy");
 
-    return NextResponse.json(usersPosts, { status: 200 });
+    return NextResponse.json(
+      { posts: usersPosts, success: true },
+      { status: 200 }
+    );
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";

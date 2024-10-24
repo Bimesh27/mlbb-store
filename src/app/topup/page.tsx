@@ -3,7 +3,7 @@
 import DiamondCard from "@/components/DiamondCard";
 import Slider from "@/components/slider/Slider";
 import { useDiamondStore } from "@/store/diamondStore";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoDiamond } from "react-icons/io5";
 
 const LoadingCard = () => (
@@ -15,11 +15,27 @@ const LoadingCard = () => (
 );
 
 const TopupPage = () => {
+  // Add client-side only state
+  const [isMounted, setIsMounted] = useState(false);
   const { diamonds, loading, getDiamond } = useDiamondStore();
 
   useEffect(() => {
+    setIsMounted(true);
     getDiamond();
   }, [getDiamond]);
+
+  // Return null on first render to avoid hydration mismatch
+  if (!isMounted) {
+    return null;
+  }
+
+  if (loading) {
+    return (
+      <div className="h-screen w-full justify-center items-center text-white flex">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="text-white min-h-[calc(100vh-4rem)] flex flex-col items-center pb-8 md:py-8">
@@ -38,11 +54,11 @@ const TopupPage = () => {
       <div className="border border-[#fafafa3b] w-full max-w-4xl rounded-xl p-6 max-sm:border-none">
         <h2 className="text-xl font-bold text-center mb-6">PACKAGES</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
-          {loading
+          {!isMounted || loading
             ? Array(6)
                 .fill(0)
                 .map((_, index) => <LoadingCard key={index} />)
-            : diamonds.map((diamond) => (
+            : diamonds?.map((diamond) => (
                 <DiamondCard key={diamond._id} diamond={diamond} />
               ))}
         </div>
