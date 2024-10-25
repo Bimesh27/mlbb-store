@@ -24,16 +24,19 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+  specificUser: User | null;
   register: (credentials: RegisterCredentials) => Promise<void>;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
   getCurrentUser: () => Promise<void>;
+  getUserById: (id: string) => Promise<void>;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
   user: null,
   loading: false,
   error: null,
+  specificUser: null,
 
   register: async (credentials: RegisterCredentials) => {
     set({ loading: true, error: null });
@@ -64,7 +67,7 @@ const useAuthStore = create<AuthState>((set) => ({
       if (response?.data?.success) {
         set({ user: response?.data?.user });
         toast.success(response?.data?.message || "Login successful!");
-        
+
         return Promise.resolve();
       } else {
         throw new Error(response?.data?.message);
@@ -115,6 +118,24 @@ const useAuthStore = create<AuthState>((set) => ({
         "An error occurred while fetching user data.";
       // toast.error(errorMessage);
       set({ user: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+  getUserById: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(`/api/get-user-by-id/${id}`);
+      console.log("id", id);
+      
+      if (response.data.success && response.data.user) {
+        set({ specificUser: response.data.user });
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "User not found";
     } finally {
       set({ loading: false });
     }

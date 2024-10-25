@@ -1,17 +1,17 @@
 "use client";
-import Link from 'next/link'
-import React from 'react'
-import { FaShop } from 'react-icons/fa6';
-import { IoDiamondOutline } from 'react-icons/io5';
-import { GoHomeFill } from 'react-icons/go';
-import { MdFileUpload } from 'react-icons/md';
-import { usePathname } from 'next/navigation';
-import { BsFilePost } from 'react-icons/bs';
-import useAuthStore from '@/store/authStore';
-import { Button } from '../ui/button';
+import Link from "next/link";
+import React from "react";
+import { FaShop } from "react-icons/fa6";
+import { IoDiamondOutline } from "react-icons/io5";
+import { GoHomeFill } from "react-icons/go";
+import { MdFileUpload } from "react-icons/md";
+import { usePathname } from "next/navigation";
+import { BsFilePost } from "react-icons/bs";
+import useAuthStore from "@/store/authStore";
+import { Button } from "../ui/button";
 
 const NavbarMobile = () => {
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
   const pathname: string = usePathname();
 
   return (
@@ -51,7 +51,10 @@ const NavbarMobile = () => {
       </Link>
       {user ? (
         <div className="flex items-center gap-2">
-          <Link href={"/admin"} className="rounded-full overflow-hidden">
+          <Link
+            href={`profile/${user._id}`}
+            className="rounded-full overflow-hidden"
+          >
             <img
               src={user.profilePicture}
               alt={user.username}
@@ -67,6 +70,6 @@ const NavbarMobile = () => {
       )}
     </div>
   );
-}
+};
 
-export default NavbarMobile
+export default NavbarMobile;

@@ -78,7 +78,10 @@ const Navbar = () => {
       <div>
         {user ? (
           <div className="flex items-center gap-2">
-            <Link href={"/admin"} className="rounded-full overflow-hidden">
+            <Link
+              href={`/profile/${user._id}`}
+              className="rounded-full overflow-hidden"
+            >
               <img
                 src={user.profilePicture}
                 alt={user.username}

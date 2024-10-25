@@ -10,7 +10,7 @@ export async function GET() {
   if (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
-
+  
   if (!user) {
     return NextResponse.json(
       { message: message || "User not found" },

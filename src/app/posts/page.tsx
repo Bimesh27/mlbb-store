@@ -2,7 +2,7 @@
 
 import Post from "@/components/Post";
 import { userPostStore } from "@/store/postStore";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 const UserPost = () => {
   const { posts, getPost, loading } = userPostStore();
