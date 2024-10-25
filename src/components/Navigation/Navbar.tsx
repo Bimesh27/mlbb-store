@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { FaFantasyFlightGames } from "react-icons/fa";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import useAuthStore from "@/store/authStore";
-import { ThemeProvider } from "./theme-provider";
-import { ModeToggle } from "./Themetoggle";
+import { ThemeProvider } from "../theme-provider";
+import { ModeToggle } from "../Themetoggle";
 
 const Navbar = () => {
   const { user, getCurrentUser, loading } = useAuthStore();
@@ -21,15 +21,14 @@ const Navbar = () => {
     fetchUser();
   }, [getCurrentUser]);
 
-  
   const pathname: string = usePathname();
   console.log(pathname);
 
-  if(!isMounted) {
+  if (!isMounted) {
     return null;
   }
 
-  if(loading) {
+  if (loading) {
     return (
       <div className="h-screen w-full justify-center items-center">
         <h1>Loading...</h1>
@@ -42,7 +41,7 @@ const Navbar = () => {
       <Link href={"/"}>
         <FaFantasyFlightGames className="text-4xl text-white" />
       </Link>
-      <div className="flex gap-5 text-white justify-center max-sm:text-sm max-sm:gap-0">
+      <div className="flex gap-5 text-white justify-center max-sm:text-sm max-sm:gap-0 items-center">
         <Link
           href={"/topup"}
           className={`rounded-full px-4 py-2 font-medium ${
@@ -79,10 +78,7 @@ const Navbar = () => {
       <div>
         {user ? (
           <div className="flex items-center gap-2">
-            <Link
-              href={"/admin"}
-              className="rounded-full overflow-hidden"
-            >
+            <Link href={"/admin"} className="rounded-full overflow-hidden">
               <img
                 src={user.profilePicture}
                 alt={user.username}

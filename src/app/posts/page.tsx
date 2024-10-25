@@ -6,18 +6,11 @@ import React, { useEffect, useState } from "react";
 
 const UserPost = () => {
   const { posts, getPost, loading } = userPostStore();
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
     getPost();
-  }, [userPostStore]);
-  console.log(posts);
+  }, []);
 
-  if (!isMounted) {
-    return null;
-  }
-  
   if (loading) {
     return (
       <div className="h-screen w-full justify-center items-center text-white">

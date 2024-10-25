@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navigation/Navbar";
 import { ToastContainer } from "react-toastify";
+import NavbarMobile from "@/components/Navigation/NavbarMobile";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,8 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiase`}
       >
-        <div className="mb-[4rem]">
+        <div className="mb-[4rem] max-sm:hidden">
           <Navbar />
+        </div>
+        <div className="sm:hidden">
+          <NavbarMobile/>
         </div>
         {children}
         <ToastContainer autoClose={2000} />

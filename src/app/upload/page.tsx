@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/authStore";
 import { userPostStore } from "@/store/postStore";
 import React, { ChangeEvent, useRef, useState } from "react";
-import { Upload } from "lucide-react";
+import { MdUpload } from "react-icons/md";
 
 interface UploadPostCredentials {
   description: string;
@@ -105,7 +105,7 @@ const UploadPostPage = () => {
         />
       </div>
 
-      <div className="flex min-h-[25rem] min-w-[20rem] max-w-[35rem] cursor-pointer border border-dotted border-[#dadada6d] p-4 transition-all hover:border-green-500">
+      <div className="flex min-h-[25rem] min-w-[20rem] max-w-[35rem] cursor-pointer border border-dotted border-[#dadada6d] p-4 transition-all hover:border-green-500 justify-center items-center">
         <input
           type="file"
           accept="image/*"
@@ -123,10 +123,10 @@ const UploadPostPage = () => {
           />
         ) : (
           <div
-            className="flex h-full w-full flex-col items-center justify-center gap-2"
+            className="flex h-full w-full gap-2 flex-col items-center justify-center"
             onClick={() => imageRef.current?.click()}
           >
-            <Upload className="h-20 w-20" />
+            <MdUpload className="h-20 w-20" />
             <span className="text-sm text-gray-300">Click to upload image</span>
           </div>
         )}
