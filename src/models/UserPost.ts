@@ -3,11 +3,6 @@ import mongoose, { Schema } from "mongoose";
 
 const userPostSchema: Schema<IUserPost> = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      maxLength: [50, "Title cannot be more than 50 characters"],
-    },
     image: {
       type: String,
       required: true,
@@ -28,4 +23,5 @@ const userPostSchema: Schema<IUserPost> = new Schema(
 const UserPost =
   mongoose.models.UserPost ||
   mongoose.model<IUserPost>("UserPost", userPostSchema);
+  
 export default UserPost;

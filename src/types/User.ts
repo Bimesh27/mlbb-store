@@ -28,7 +28,6 @@ export interface jwtPayload {
 }
 
 export interface IUserPost extends Document {
-  title: string;
   image: string;
   description: string;
   createdBy: Types.ObjectId;

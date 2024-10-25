@@ -13,9 +13,9 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   try {
-    const { title, description, image } = await request.json();
+    const { description, image } = await request.json();
 
-    if (!title || !description || !image) {
+    if (!description || !image) {
       return NextResponse.json(
         {
           message: "All fields are required",
@@ -28,7 +28,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     const imageUrl = uploadedImage.secure_url;
 
     const newUserPost = new UserPost({
-      title,
       image: imageUrl,
       description,
       createdBy: user._id,
@@ -40,6 +39,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       {
         message: "Post created successfully",
         post: newUserPost,
+        success: true,
       },
       { status: 201 }
     );
