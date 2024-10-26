@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface User {
-  _id: string;
+  id: string;
   email: string;
   username: string;
   role: string;
@@ -81,6 +81,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ loading: false });
     }
   },
+  
   logout: async () => {
     set({ loading: true, error: null });
     try {
@@ -101,6 +102,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ loading: false });
     }
   },
+
   getCurrentUser: async () => {
     set({ loading: true, error: null });
     try {
@@ -122,6 +124,7 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ loading: false });
     }
   },
+
   getUserById: async (id: string) => {
     set({ loading: true, error: null });
     try {

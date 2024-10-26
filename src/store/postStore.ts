@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Types } from "mongoose";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
@@ -29,6 +28,7 @@ interface UserPostState {
   getPost: () => Promise<void>;
   uploadPost: (credentials: UploadPostCredentials) => Promise<void>;
   getPostByUserId: (id: string) => Promise<void>;
+  deletePost: (id: string) => Promise<void>;
 }
 
 export const userPostStore = create<UserPostState>((set) => ({
@@ -66,6 +66,23 @@ export const userPostStore = create<UserPostState>((set) => ({
         set({ error: null });
       } else {
         throw new Error(response.data.message || "Failed to upload post");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred";
+      set({ error: errorMessage });
+    }
+  },
+
+  deletePost: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.delete(`/api/user-post/delete?id=${id}`);
+      if (response.data.success && response.status === 200) {
+        toast.success(response.data.message);
+        set({ error: null });
+      } else {
+        throw new Error(response.data.message || "Failed to delete post");
       }
     } catch (error) {
       const errorMessage =

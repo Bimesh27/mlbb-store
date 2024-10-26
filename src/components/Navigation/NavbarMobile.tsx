@@ -8,7 +8,7 @@ import { MdFileUpload } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { BsFilePost } from "react-icons/bs";
 import useAuthStore from "@/store/authStore";
-import { Button } from "../ui/button";
+import { TbLogin2 } from "react-icons/tb";
 
 const NavbarMobile = () => {
   const { user } = useAuthStore();
@@ -52,7 +52,7 @@ const NavbarMobile = () => {
       {user ? (
         <div className="flex items-center gap-2">
           <Link
-            href={`profile/${user._id}`}
+            href={`profile/${user.id}`}
             className="rounded-full overflow-hidden"
           >
             <img
@@ -64,9 +64,13 @@ const NavbarMobile = () => {
           {user.role === "admin" && <span>(admin)</span>}
         </div>
       ) : (
-        <Button className="rounded-full px-6 bg-white text-black hover:bg-gray-400">
-          <Link href={"/login"}>Login</Link>
-        </Button>
+        <Link href={"/login"}>
+          <TbLogin2
+            className={`text-2xl ${
+              pathname === "/login" ? "text-orange-500" : ""
+            }`}
+          />
+        </Link>
       )}
     </div>
   );

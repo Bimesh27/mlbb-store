@@ -7,8 +7,8 @@ import React, { useEffect } from "react";
 import { MdVerified } from "react-icons/md";
 
 const ProfilePage = () => {
-  const { specificUser, getUserById, loading } = useAuthStore();
-  const { posts, getPostByUserId } = userPostStore();
+  const { specificUser, getUserById, loading, user } = useAuthStore();
+  const { posts, getPostByUserId, deletePost } = userPostStore();
   const { id } = useParams();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const ProfilePage = () => {
       </div>
       <div className="w-full max-w-[30rem]">
         {posts.map((post) => (
-          <Post key={post._id} post={post} />
+          <Post key={post._id} post={post} deletePost={deletePost}/>
         ))}
       </div>
     </div>

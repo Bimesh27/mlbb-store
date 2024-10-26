@@ -1,14 +1,20 @@
 "use client";
 
 import Post from "@/components/Post";
+import useAuthStore from "@/store/authStore";
 import { userPostStore } from "@/store/postStore";
 import React, { useEffect } from "react";
 
 const UserPost = () => {
-  const { posts, getPost, loading } = userPostStore();
+  const { posts, getPost, loading, deletePost } = userPostStore();
+  const { user, getCurrentUser } = useAuthStore();
 
   useEffect(() => {
-    getPost();
+    const fetchPostandUser = async () => {
+      getPost();
+      getCurrentUser();
+    }
+    fetchPostandUser();
   }, []);
 
   if (loading) {
@@ -18,11 +24,11 @@ const UserPost = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="min-h-[calc(100vh-4rem)] text-white gradient-bg w-full flex  items-center flex-col">
       {posts.map((post) => (
-        <Post post={post} key={post._id}/>
+        <Post post={post} key={post._id} deletePost={deletePost} user={user} />
       ))}
     </div>
   );
