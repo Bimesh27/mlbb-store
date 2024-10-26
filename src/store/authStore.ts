@@ -67,7 +67,6 @@ const useAuthStore = create<AuthState>((set) => ({
       if (response?.data?.success) {
         set({ user: response?.data?.user });
         toast.success(response?.data?.message || "Login successful!");
-
         return Promise.resolve();
       } else {
         throw new Error(response?.data?.message);

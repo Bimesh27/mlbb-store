@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import useAuthStore from "@/store/authStore";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,6 +16,7 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<string>("");
   const router = useRouter();
+  const {login} = useAuthStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,17 +35,11 @@ export default function SignupPage() {
     setPasswordError("");
     try {
       setLoading(true);
-      const response = await axios.post("/api/login", {
+      await login({
         email: formData.email,
         password: formData.password,
-      });
-
-      console.log(response.data);
-
-      if (response.data && response.data.success) {
-        toast.success("Login successful");
-        router.push("/upload");
-      }
+      })
+      
     } catch (error: any) {
       // console.error("Signup failed. Please try again.");
       if (

@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import useAuthStore from "@/store/authStore";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash, FaFantasyFlightGames } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -11,13 +13,13 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 export default function SignupPage() {
+  const { user, getCurrentUser, register } = useAuthStore();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPass, setShowConfirmPass] = useState<boolean>(false);
 
   const [passwordError, setPasswordError] = useState<string>("");
-
+  const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -42,16 +44,12 @@ export default function SignupPage() {
     setPasswordError("");
     try {
       setLoading(true);
-      const response = await axios.post("/api/signup", {
+      await register({
         username: formData.username,
         email: formData.email,
         password: formData.password,
       });
-      console.log(response.data);
-
-      if (response.data && response.data.success) {
-        toast.success("Signup successful");
-      }
+      
     } catch (error: any) {
       // console.error("Signup failed. Please try again.");
       if (
@@ -150,10 +148,7 @@ export default function SignupPage() {
           </Button>
         </form>
         <p className="font-medium text-sm">
-          Alreay have an account ?{" "}
-          <Link href={"/login"}>
-            Login here
-          </Link>
+          Alreay have an account ? <Link href={"/login"}>Login here</Link>
         </p>
       </div>
       {/* <ToastContainer/> */}

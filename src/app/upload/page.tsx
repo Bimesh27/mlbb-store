@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/authStore";
 import { userPostStore } from "@/store/postStore";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useRef, useState } from "react";
 import { MdUpload } from "react-icons/md";
 
@@ -12,6 +13,7 @@ interface UploadPostCredentials {
 }
 
 const UploadPostPage = () => {
+  const router = useRouter();
   const imageRef = useRef<HTMLInputElement>(null);
   const { uploadPost } = userPostStore();
   const { user, loading } = useAuthStore();
@@ -21,7 +23,7 @@ const UploadPostPage = () => {
   const [formData, setFormData] = useState<UploadPostCredentials>({
     description: "",
     image: "",
-    createdBy: user?._id || "",
+    createdBy: user?.id || "",
   });
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +68,9 @@ const UploadPostPage = () => {
       setFormData({
         description: "",
         image: "",
-        createdBy: user?._id || "",
+        createdBy: user?.id || "",
       });
-
+      router.push("/posts");
       // Reset file input
       if (imageRef.current) {
         imageRef.current.value = "";

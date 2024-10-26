@@ -80,7 +80,7 @@ export const userPostStore = create<UserPostState>((set) => ({
     try {
       const response = await axios.delete(`/api/user-post/delete?id=${id}`);
       if (response.data.success && response.status === 200) {
-        toast.success(response.data.message);
+        toast.success(response.data.message || "Post deleted successfully");
         set({ error: null });
       } else {
         throw new Error(response.data.message || "Failed to delete post");
