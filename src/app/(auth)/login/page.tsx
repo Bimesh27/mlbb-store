@@ -13,10 +13,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SignupPage() {
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<string>("");
   const router = useRouter();
-  const {login} = useAuthStore();
+  const {login, getCurrentUser} = useAuthStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -39,7 +40,9 @@ export default function SignupPage() {
         email: formData.email,
         password: formData.password,
       })
-      
+      router.push("/");
+      await getCurrentUser(); 
+
     } catch (error: any) {
       // console.error("Signup failed. Please try again.");
       if (

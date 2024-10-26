@@ -50,7 +50,7 @@ const NavbarMobile = () => {
         />
       </Link>
       {user ? (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center">
           <Link
             href={`profile/${user.id}`}
             className="rounded-full overflow-hidden"

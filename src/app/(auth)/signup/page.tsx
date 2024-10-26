@@ -49,7 +49,8 @@ export default function SignupPage() {
         email: formData.email,
         password: formData.password,
       });
-      
+      router.push("/");
+      getCurrentUser();
     } catch (error: any) {
       // console.error("Signup failed. Please try again.");
       if (

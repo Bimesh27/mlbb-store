@@ -5,12 +5,11 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import useAuthStore from "@/store/authStore";
-import { ThemeProvider } from "../theme-provider";
-import { ModeToggle } from "../Themetoggle";
-import { MdVerified } from "react-icons/md";
+import { MdKeyboardArrowDown, MdVerified } from "react-icons/md";
+import NavbarDropdown from "./NavbarDropdown";
 
 const Navbar = () => {
-  const { user, getCurrentUser, loading } = useAuthStore();
+  const { user, getCurrentUser, loading, logout } = useAuthStore();
   const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
@@ -36,6 +35,11 @@ const Navbar = () => {
       </div>
     );
   }
+
+  const handleLogout = async () => {
+    await logout();
+    await getCurrentUser();
+  };
 
   return (
     <nav className="flex items-center justify-between px-12 py-4 top-0 w-full h-16 fixed border-b border-[#b4b3b34b] z-50 bg-black">
@@ -78,7 +82,7 @@ const Navbar = () => {
       </div>
       <div>
         {user ? (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Link
               href={`/profile/${user.id}`}
               className="rounded-full overflow-hidden"
@@ -94,6 +98,12 @@ const Navbar = () => {
                 <MdVerified className="text-blue-600" />
               </span>
             )}
+            {/* <MdKeyboardArrowDown className="text-white text-3xl" /> */}
+            <NavbarDropdown
+              userId={user.id}
+              handleLogout={handleLogout}
+              getCurrentUser={getCurrentUser}
+            />
           </div>
         ) : (
           <Button className="rounded-full px-6 bg-white text-black hover:bg-gray-400">

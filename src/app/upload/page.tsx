@@ -82,7 +82,7 @@ const UploadPostPage = () => {
     }
   };
 
-  if (loading) {
+  if (loading || !user) {
     return (
       <div className="flex h-screen w-full items-center justify-center text-white">
         <span className="text-xl">Loading...</span>

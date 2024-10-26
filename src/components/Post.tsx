@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdVerified } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import {
   Dialog,
@@ -87,7 +87,10 @@ const Post = ({ post, deletePost, user, getPost, loading }: PostProps) => {
               alt=""
               className="w-12 h-12 rounded-full"
             />
-            <h1 className="font-semibold">{post?.createdBy?.username}</h1>
+            <div className="flex items-center">
+              <h1 className="font-semibold">{post?.createdBy?.username}</h1>
+              {post?.createdBy?.role === "admin" && (<MdVerified className="text-blue-600"/>)}
+            </div>
           </Link>
           {post?.createdBy?._id === user?.id && (
             <div className="relative w-fit">
