@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { FaFantasyFlightGames } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useAuthStore from "@/store/authStore";
-import { MdKeyboardArrowDown, MdVerified } from "react-icons/md";
+import { MdVerified } from "react-icons/md";
 import NavbarDropdown from "./NavbarDropdown";
 
 const Navbar = () => {
   const { user, getCurrentUser, loading, logout } = useAuthStore();
   const [isMounted, setIsMounted] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,6 +40,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     await logout();
     await getCurrentUser();
+    router.push("/");
   };
 
   return (
@@ -102,7 +104,7 @@ const Navbar = () => {
             <NavbarDropdown
               userId={user.id}
               handleLogout={handleLogout}
-              getCurrentUser={getCurrentUser}
+              up={true}
             />
           </div>
         ) : (

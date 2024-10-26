@@ -5,14 +5,22 @@ import { FaShop } from "react-icons/fa6";
 import { IoDiamondOutline } from "react-icons/io5";
 import { GoHomeFill } from "react-icons/go";
 import { MdFileUpload, MdVerified } from "react-icons/md";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { BsFilePost } from "react-icons/bs";
 import useAuthStore from "@/store/authStore";
 import { TbLogin2 } from "react-icons/tb";
+import NavbarDropdown from "./NavbarDropdown";
 
 const NavbarMobile = () => {
-  const { user } = useAuthStore();
+  const { user, logout, getCurrentUser } = useAuthStore();
+  const router = useRouter();
   const pathname: string = usePathname();
+
+  const handleLogout = async () => {
+    await logout();
+    await getCurrentUser();
+    router.push("/");
+  };
 
   return (
     <div className="fixed h-16 bottom-0 w-full text-white z-50 bg-black items-center justify-evenly flex">
@@ -50,7 +58,7 @@ const NavbarMobile = () => {
         />
       </Link>
       {user ? (
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Link
             href={`profile/${user.id}`}
             className="rounded-full overflow-hidden"
@@ -66,6 +74,11 @@ const NavbarMobile = () => {
               <MdVerified className="text-blue-600" />
             </span>
           )}
+          <NavbarDropdown
+            userId={user.id}
+            handleLogout={handleLogout}
+            up={false}
+          />
         </div>
       ) : (
         <Link href={"/login"}>

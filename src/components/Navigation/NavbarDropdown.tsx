@@ -1,4 +1,4 @@
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -10,18 +10,22 @@ import Link from "next/link";
 interface ProfileDropdownProps {
   userId: string;
   handleLogout: () => void;
-  getCurrentUser: () => Promise<void>;
+  up: boolean;
 }
 
 export default function ProfileDropdown({
   userId,
   handleLogout,
-  getCurrentUser,
+  up
 }: ProfileDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <MdKeyboardArrowDown className="text-white text-3xl border-none" />
+        {up ? (
+          <MdKeyboardArrowDown className="text-white text-3xl border-none" />
+        ) : (
+          <MdKeyboardArrowUp className="text-white text-3xl border-none" />
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
