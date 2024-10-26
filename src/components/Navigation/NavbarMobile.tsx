@@ -61,7 +61,11 @@ const NavbarMobile = () => {
               className="w-8"
             />
           </Link>
-          {user.role === "admin" && <span><MdVerified className="text-blue-600"/></span>}
+          {user.role === "admin" && (
+            <span>
+              <MdVerified className="text-blue-600" />
+            </span>
+          )}
         </div>
       ) : (
         <Link href={"/login"}>

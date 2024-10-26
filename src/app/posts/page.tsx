@@ -24,6 +24,7 @@ const UserPost = () => {
     );
   }
 
+
   return (
     <div className="min-h-[calc(100vh-4rem)] text-white gradient-bg w-full flex  items-center flex-col justify-center">
       {posts && posts.map((post) => (
@@ -36,6 +37,7 @@ const UserPost = () => {
           loading={loading}
         />
       ))}
+
     </div>
   );
 };

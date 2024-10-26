@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash, FaFantasyFlightGames } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
@@ -12,8 +13,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
   const [passwordError, setPasswordError] = useState<string>("");
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -41,6 +42,7 @@ export default function SignupPage() {
 
       if (response.data && response.data.success) {
         toast.success("Login successful");
+        router.push("/upload");
       }
     } catch (error: any) {
       // console.error("Signup failed. Please try again.");
