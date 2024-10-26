@@ -75,6 +75,7 @@ export const userPostStore = create<UserPostState>((set) => ({
   },
 
   deletePost: async (id: string) => {
+
     set({ loading: true, error: null });
     try {
       const response = await axios.delete(`/api/user-post/delete?id=${id}`);
@@ -88,6 +89,8 @@ export const userPostStore = create<UserPostState>((set) => ({
       const errorMessage =
         error instanceof Error ? error.message : "An error occurred";
       set({ error: errorMessage });
+    } finally {
+      set({ loading: false });
     }
   },
 

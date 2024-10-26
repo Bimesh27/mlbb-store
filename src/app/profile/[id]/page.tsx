@@ -5,6 +5,7 @@ import { userPostStore } from "@/store/postStore";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { MdVerified } from "react-icons/md";
+import { HiDotsHorizontal } from "react-icons/hi";
 
 const ProfilePage = () => {
   const { specificUser, getUserById, loading, user } = useAuthStore();
@@ -44,9 +45,9 @@ const ProfilePage = () => {
           <MdVerified className={`text-blue-600 text-2xl ${specificUser?.role !== "admin" ? "hidden" : ""} `} />
         </div>
       </div>
-      <div className="w-full max-w-[30rem]">
+      <div className="w-full max-w-[30rem] flex justify-center flex-col items-center">
         {posts.map((post) => (
-          <Post key={post._id} post={post} deletePost={deletePost}/>
+          <Post key={post._id} post={post} deletePost={deletePost} user={user}/>
         ))}
       </div>
     </div>

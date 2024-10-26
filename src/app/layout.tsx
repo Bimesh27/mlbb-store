@@ -35,9 +35,9 @@ export default function RootLayout({
           <Navbar />
         </div>
         <div className="sm:hidden">
-          <NavbarMobile/>
+          <NavbarMobile />
         </div>
-        {children}
+        <div className="max-sm:mb-[4rem]">{children}</div>
         <ToastContainer autoClose={2000} />
       </body>
     </html>

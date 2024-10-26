@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import useAuthStore from "@/store/authStore";
 import { ThemeProvider } from "../theme-provider";
 import { ModeToggle } from "../Themetoggle";
+import { MdVerified } from "react-icons/md";
 
 const Navbar = () => {
   const { user, getCurrentUser, loading } = useAuthStore();
@@ -77,9 +78,9 @@ const Navbar = () => {
       </div>
       <div>
         {user ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Link
-              href={`/profile/${user._id}`}
+              href={`/profile/${user.id}`}
               className="rounded-full overflow-hidden"
             >
               <img
@@ -88,7 +89,11 @@ const Navbar = () => {
                 className="w-10"
               />
             </Link>
-            {user.role === "admin" && <span>(admin)</span>}
+            {user.role === "admin" && (
+              <span>
+                <MdVerified className="text-blue-600" />
+              </span>
+            )}
           </div>
         ) : (
           <Button className="rounded-full px-6 bg-white text-black hover:bg-gray-400">

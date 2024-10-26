@@ -4,7 +4,7 @@ import React from "react";
 import { FaShop } from "react-icons/fa6";
 import { IoDiamondOutline } from "react-icons/io5";
 import { GoHomeFill } from "react-icons/go";
-import { MdFileUpload } from "react-icons/md";
+import { MdFileUpload, MdVerified } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { BsFilePost } from "react-icons/bs";
 import useAuthStore from "@/store/authStore";
@@ -50,7 +50,7 @@ const NavbarMobile = () => {
         />
       </Link>
       {user ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Link
             href={`profile/${user.id}`}
             className="rounded-full overflow-hidden"
@@ -61,7 +61,7 @@ const NavbarMobile = () => {
               className="w-8"
             />
           </Link>
-          {user.role === "admin" && <span>(admin)</span>}
+          {user.role === "admin" && <span><MdVerified className="text-blue-600"/></span>}
         </div>
       ) : (
         <Link href={"/login"}>
