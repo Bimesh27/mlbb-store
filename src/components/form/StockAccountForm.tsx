@@ -3,29 +3,41 @@ import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MdUpload, MdClose } from "react-icons/md";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useMlStore } from "@/store/mlAccountStore";
 
 interface ImageFile {
   url: string;
-  file: File;
+  file: string; // Changed from File to string
+}
+
+interface FormData {
+  description: string;
+  price: string;
 }
 
 const StockAccountForm = () => {
+  const { addPost } = useMlStore();
   const imageRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string>("");
   const [images, setImages] = useState<ImageFile[]>([]);
+  const [formData, setFormData] = useState<FormData>({
+    description: "",
+    price: "",
+  });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
     const files = Array.from(e.target.files || []);
 
-    // Check if adding new files would exceed the limit
     if (images.length + files.length > 4) {
       setError("You can only upload up to 4 images");
       return;
     }
 
-    // Validate each file
     const validFiles = files.filter((file) => {
       if (!file.type.startsWith("image/")) {
         setError("Please upload only image files");
@@ -40,7 +52,6 @@ const StockAccountForm = () => {
       return true;
     });
 
-    // Process valid files
     validFiles.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -48,17 +59,33 @@ const StockAccountForm = () => {
           ...prev,
           {
             url: reader.result as string,
-            file: file,
+            file: reader.result as string, // Store the base64 string instead of File object
           },
         ]);
       };
       reader.readAsDataURL(file);
     });
 
-    // Reset input value to allow selecting the same file again
     if (imageRef.current) {
       imageRef.current.value = "";
     }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    // For price field, only allow numbers and decimal point
+    if (name === "price" && !/^\d*\.?\d*$/.test(value) && value !== "") {
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError("");
   };
 
   const removeImage = (index: number) => {
@@ -66,27 +93,47 @@ const StockAccountForm = () => {
   };
 
   const handleUpload = async () => {
+    // Validate form data
+    if (!formData.description.trim()) {
+      setError("Description is required");
+      return;
+    }
+
+    if (!formData.price || parseFloat(formData.price) <= 0) {
+      setError("Please enter a valid price");
+      return;
+    }
+
+    if (images.length === 0) {
+      setError("Please upload at least one image");
+      return;
+    }
+
     try {
       setIsUploading(true);
       setError("");
 
-      // Simulate upload delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Here you would typically create a FormData object with all the data
+      const postData = {
+        description: formData.description,
+        price: parseFloat(formData.price),
+        images: images.map((img) => img.file), // Now sending array of strings
+      };
 
-      // Here you would typically make an API call to upload the images
-      // const response = await uploadImages(images.map(img => img.file));
+      await addPost(postData);
 
       // Reset form after successful upload
       setImages([]);
+      setFormData({ description: "", price: "" });
     } catch (err) {
-      setError("Failed to upload images. Please try again.");
+      setError("Failed to upload post. Please try again.");
     } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <div className="border rounded-lg w-full max-w-md flex p-4 flex-col  border-gray-700 items-center bg-gray-900 min-h-[26rem]">
+    <div className="border rounded-lg w-full max-w-md flex p-4 flex-col border-gray-700 items-center bg-gray-900 min-h-[26rem]">
       <h1 className="my-6 text-xl font-semibold">Add Stock Account</h1>
       <div className="flex w-full flex-col items-center justify-center gap-6 p-4 text-white">
         <div className="grid grid-cols-2 gap-4 w-full">
@@ -134,6 +181,32 @@ const StockAccountForm = () => {
           )}
         </div>
 
+        <div className="space-y-4 w-full">
+          <div className="space-y-1">
+            <Label htmlFor="price">Price</Label>
+            <Input
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+              placeholder="Enter price"
+              className="bg-black border-gray-700 text-white placeholder:text-gray-500"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              placeholder="Enter description"
+              className="bg-black border-gray-700 text-white placeholder:text-gray-500 min-h-[100px]"
+            />
+          </div>
+        </div>
+
         {error && (
           <Alert variant="destructive" className="w-full">
             <AlertDescription>{error}</AlertDescription>
@@ -143,7 +216,12 @@ const StockAccountForm = () => {
         <Button
           className="w-full rounded-lg bg-green-600 px-8 py-2 font-medium hover:bg-green-700 disabled:opacity-50"
           onClick={handleUpload}
-          disabled={isUploading || images.length === 0}
+          disabled={
+            isUploading ||
+            images.length === 0 ||
+            !formData.description.trim() ||
+            !formData.price
+          }
         >
           {isUploading ? "Uploading..." : "Upload Post"}
         </Button>

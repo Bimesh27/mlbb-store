@@ -11,13 +11,18 @@ interface MlAccount {
   updatedAt: string;
 }
 
+interface MlPost {
+  price: number;
+  description: string;
+  images: string[];
+}
 interface MlStoreState {
   posts: MlAccount[];
   loading: boolean;
   error: string | null;
   getPosts: () => Promise<void>;
   deletePost: (id: string) => Promise<void>;
-  // addPost: (post: MlPost) => Promise<void>;
+  addPost: (post: MlPost) => Promise<void>;
   // updatePost: (post: MlPost) => Promise<void>;
 }
 export const useMlStore = create<MlStoreState>((set) => ({
@@ -58,6 +63,25 @@ export const useMlStore = create<MlStoreState>((set) => ({
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to delete post";
+      set({ error: errorMessage });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  addPost: async (post: MlPost) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.post("/api/stock-account/add", post);
+      if (response.data.success && response.data.status === 201) {
+        toast.success(response.data.message || "stock added successfully");
+      } else {
+        toast.error(response.data.message || "Failed to add stock");
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to add post";
       set({ error: errorMessage });
     } finally {
       set({ loading: false });

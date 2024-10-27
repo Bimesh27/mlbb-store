@@ -49,11 +49,14 @@ export async function POST(request: Request) {
 
     await newAccount.save();
 
-    return NextResponse.json({
-      message: "Account added successfully",
-      success: true,
-      data: newAccount,
-    });
+    return NextResponse.json(
+      {
+        message: "Account added successfully",
+        success: true,
+        data: newAccount,
+      },
+      { status: 201 }
+    );
   } catch (error) {
     const errorMessage =
       error instanceof Error

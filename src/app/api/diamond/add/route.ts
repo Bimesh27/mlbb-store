@@ -32,7 +32,11 @@ export async function POST(request: Request): Promise<NextResponse> {
     await newDiamond.save();
 
     return NextResponse.json(
-      { message: "Diamond entry added Successfully", data: newDiamond },
+      {
+        message: "Diamond entry added Successfully",
+        data: newDiamond,
+        success: true,
+      },
       { status: 201 }
     );
   } catch (error: unknown) {

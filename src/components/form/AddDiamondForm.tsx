@@ -1,24 +1,26 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { MdDiamond } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useDiamondStore } from "@/store/diamondStore";
 
 interface FormData {
-  price: string;
-  amount: string;
-  bonus: string;
+  price: number | undefined;
+  amount: number | undefined;
+  bonus: number | undefined;
 }
 
 const AddDiamondForm = () => {
+  const { addDiamond } = useDiamondStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
-    price: "",
-    amount: "",
-    bonus: "",
+    price: undefined,
+    amount: undefined,
+    bonus: undefined,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,12 +52,9 @@ const AddDiamondForm = () => {
       setIsSubmitting(true);
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
+      await addDiamond(formData);
 
-      // Here you would typically make an API call
-      // await addDiamond(formData);
-
-      // Reset form
-      setFormData({ price: "", amount: "", bonus: "" });
+      setFormData({ price: 0, amount: 0, bonus: 0 });
     } catch (err) {
       setError("Failed to add diamond package. Please try again.");
     } finally {
