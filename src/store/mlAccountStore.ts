@@ -34,9 +34,7 @@ export const useMlStore = create<MlStoreState>((set) => ({
         response.data.status === 200
       ) {
         set({ posts: response.data.stockAccounts });
-        toast.success(response.data.message);
       } else {
-        toast.error(response.data.message);
         throw new Error(response.data.message);
       }
     } catch (error: unknown) {

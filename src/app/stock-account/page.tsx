@@ -1,12 +1,20 @@
 "use client";
 import ImageModal from "@/components/ImageModal";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog";
+import useAuthStore from "@/store/authStore";
 import { useMlStore } from "@/store/mlAccountStore";
+import { DeleteIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { HiDotsHorizontal } from "react-icons/hi";
+import { MdDelete } from "react-icons/md";
 
 const StockAccountPage = () => {
-  const { posts, getPosts } = useMlStore();
+  const { user } = useAuthStore();
+  const { posts, getPosts, deletePost } = useMlStore();
   const [selectedImages, setSelectedImages] = useState<string[] | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -16,9 +24,13 @@ const StockAccountPage = () => {
   }, []);
   console.log(posts);
 
-  const handleImageClick = (images : string [], index : number) => {
+  const handleImageClick = (images: string[], index: number) => {
     setSelectedImages(images);
     setSelectedImageIndex(index);
+  };
+
+  const handleDelete = async () => {
+
   }
 
   return (
@@ -27,7 +39,7 @@ const StockAccountPage = () => {
         {posts.map((post) => (
           <div
             key={post._id}
-            className="flex flex-col gap-6 justify-center bg-gray-900 border-b border-[#fafafa45] py-4 px-1 rounded-xl overflow-hidden"
+            className="flex flex-col gap-6 justify-center bg-gray-900 border-b border-[#fafafa45] py-4 px-1"
           >
             <div className="flex justify-between items-center">
               <div className="space-y-2">
@@ -36,25 +48,58 @@ const StockAccountPage = () => {
                 </p>
                 <p>{post.description}</p>
               </div>
-              <p className=" text-xm font-bold px-4 py-1 rounded-xl cursor-pointer text-green-500">
-                &#8377; {post.price}
-              </p>
+              <div className="flex flex-col items-center">
+                {user && user?.role === "admin" && (
+                  <MdDelete className="text-white ml-8 text-xl cursor-pointer" onClick={() => setDeleteDialogOpen(true)}/>
+                )}
+                <p className=" text-xm font-bold px-4 py-1 rounded-xl cursor-pointer text-green-500">
+                  &#8377; {post.price}
+                </p>
+              </div>
             </div>
-            <div className="columns-2 rounded-lg overflow-hidden">
+            <div className="flex flex-wrap rounded-lg overflow-hidden justify-center gap-1">
               {post.images.length === 1 ? (
                 <img
                   src={post.images[0]}
                   alt="stock account"
-                  className="w-full object-cover rounded-lg"
+                  className="w-full object-cover"
                   onClick={() => handleImageClick(post.images, 0)}
                 />
+              ) : post.images.length === 2 ? (
+                post.images.map((image, idx) => (
+                  <img
+                    key={idx}
+                    src={image}
+                    alt="stock account"
+                    className="w-[49%] min-h-[15rem] object-cover"
+                    onClick={() => handleImageClick(post.images, idx)}
+                  />
+                ))
+              ) : post.images.length === 3 ? (
+                <>
+                  {post.images.slice(0, 2).map((image, idx) => (
+                    <img
+                      key={idx}
+                      src={image}
+                      alt="stock account"
+                      className="w-[49%] min-h-[15rem] object-cover"
+                      onClick={() => handleImageClick(post.images, idx)}
+                    />
+                  ))}
+                  <img
+                    src={post.images[2]}
+                    alt="stock account"
+                    className="w-full min-h-[15rem] object-cover mt-1"
+                    onClick={() => handleImageClick(post.images, 2)}
+                  />
+                </>
               ) : (
                 post.images.map((image, idx) => (
                   <img
                     key={idx}
                     src={image}
                     alt="stock account"
-                    className="w-full min-h-[15rem] object-cover rounded-xl"
+                    className="w-[49%] min-h-[15rem] object-cover"
                     onClick={() => handleImageClick(post.images, idx)}
                   />
                 ))
@@ -70,6 +115,28 @@ const StockAccountPage = () => {
           onClose={() => setSelectedImages(null)}
         />
       )}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="text-white">
+          <DialogTitle>Delete Post</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete this post? This action cannot be
+            undone.
+          </DialogDescription>
+          <DialogFooter className="flex flex-col gap-4">
+            <DialogClose asChild>
+              <Button
+                variant="outline"
+                onClick={() => setDeleteDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button variant="outline" onClick={handleDelete}>
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
