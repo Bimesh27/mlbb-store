@@ -1,19 +1,18 @@
-import { NextResponse } from "next/server";
 import { checkAdmin } from "@/utils/checkAdmin";
+import { NextResponse } from "next/server";
+
 
 export async function GET() {
   try {
     const result = await checkAdmin();
 
-    if (result.status !== 200) {
-      return NextResponse.json(
-        { message: result.message },
-        { status: result.status }
-      );
-    }
-
-    return NextResponse.json({ message: "Admin verified" }, { status: 200 });
+    // Make sure we're returning the status in the response
+    return NextResponse.json(result, { status: result.status });
   } catch (error) {
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    console.error("Admin check error:", error);
+    return NextResponse.json(
+      { status: 500, message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

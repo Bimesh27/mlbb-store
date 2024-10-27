@@ -16,8 +16,8 @@ interface MlStoreState {
   loading: boolean;
   error: string | null;
   getPosts: () => Promise<void>;
+  deletePost: (id: string) => Promise<void>;
   // addPost: (post: MlPost) => Promise<void>;
-  // deletePost: (id: string) => Promise<void>;
   // updatePost: (post: MlPost) => Promise<void>;
 }
 export const useMlStore = create<MlStoreState>((set) => ({
@@ -46,4 +46,21 @@ export const useMlStore = create<MlStoreState>((set) => ({
     }
   },
 
+  deletePost: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.delete(`/api/stock-account/delete?id=${id}`);
+      if (response.data.success && response.data.status === 200) {
+        toast.success(response.data.message || "stock deleted successfully");
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to delete post";
+      set({ error: errorMessage });
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

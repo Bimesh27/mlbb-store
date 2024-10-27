@@ -1,12 +1,17 @@
 "use client";
 import ImageModal from "@/components/ImageModal";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import useAuthStore from "@/store/authStore";
 import { useMlStore } from "@/store/mlAccountStore";
-import { DeleteIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { HiDotsHorizontal } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 
 const StockAccountPage = () => {
@@ -15,6 +20,8 @@ const StockAccountPage = () => {
   const [selectedImages, setSelectedImages] = useState<string[] | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  // Add state to track which post is being deleted
+  const [postToDelete, setPostToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,16 +29,27 @@ const StockAccountPage = () => {
     };
     fetchPosts();
   }, []);
-  console.log(posts);
 
   const handleImageClick = (images: string[], index: number) => {
     setSelectedImages(images);
     setSelectedImageIndex(index);
   };
 
-  const handleDelete = async () => {
+  // Modified to handle opening delete dialog
+  const handleDeleteClick = (postId: string) => {
+    setPostToDelete(postId);
+    setDeleteDialogOpen(true);
+  };
 
-  }
+  // Modified delete handler
+  const handleDelete = async () => {
+    if (postToDelete) {
+      await deletePost(postToDelete);
+      await getPosts();
+      setDeleteDialogOpen(false);
+      setPostToDelete(null);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full text-white flex justify-center py-2 ">
@@ -50,7 +68,11 @@ const StockAccountPage = () => {
               </div>
               <div className="flex flex-col items-center">
                 {user && user?.role === "admin" && (
-                  <MdDelete className="text-white ml-8 text-xl cursor-pointer" onClick={() => setDeleteDialogOpen(true)}/>
+                  <MdDelete
+                    className="text-white ml-8 text-xl cursor-pointer"
+                    // Modified click handler to pass post._id
+                    onClick={() => handleDeleteClick(post._id)}
+                  />
                 )}
                 <p className=" text-xm font-bold px-4 py-1 rounded-xl cursor-pointer text-green-500">
                   &#8377; {post.price}
@@ -117,9 +139,9 @@ const StockAccountPage = () => {
       )}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent className="text-white">
-          <DialogTitle>Delete Post</DialogTitle>
+          <DialogTitle>Delete Stock-account</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this post? This action cannot be
+            Are you sure you want to delete this ? This action cannot be
             undone.
           </DialogDescription>
           <DialogFooter className="flex flex-col gap-4">
@@ -131,7 +153,11 @@ const StockAccountPage = () => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button variant="outline" onClick={handleDelete}>
+            <Button
+              variant="outline"
+              // Modified to use handleDelete without parameters
+              onClick={handleDelete}
+            >
               Confirm
             </Button>
           </DialogFooter>

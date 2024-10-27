@@ -28,7 +28,8 @@ export async function DELETE(request: Request) {
     if (account.images && account.images.length > 0) {
       for (const imageUrl of account.images) {
         try {
-          const publicId = "ml_stock_accounts/"+imageUrl.split("/").pop()?.split(".")[0];
+          const publicId =
+            "ml_stock_accounts/" + imageUrl.split("/").pop()?.split(".")[0];
           if (publicId) {
             await cloudinary.uploader.destroy(publicId);
           }
@@ -44,6 +45,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         message: "Account deleted successfully",
+        success: false,
       },
       { status: 200 }
     );

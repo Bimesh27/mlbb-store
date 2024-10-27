@@ -4,8 +4,9 @@ import useAuthStore from "@/store/authStore";
 import { userPostStore } from "@/store/postStore";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
-import { MdVerified } from "react-icons/md";
+import { MdAdminPanelSettings, MdVerified } from "react-icons/md";
 import { HiDotsHorizontal } from "react-icons/hi";
+import Link from "next/link";
 
 const ProfilePage = () => {
   const { specificUser, getUserById, loading, user } = useAuthStore();
@@ -42,12 +43,27 @@ const ProfilePage = () => {
         />
         <div className="flex items-center gap-1">
           <h1 className="text-2xl font-semibold">{specificUser?.username}</h1>
-          <MdVerified className={`text-blue-600 text-2xl ${specificUser?.role !== "admin" ? "hidden" : ""} `} />
+          <MdVerified
+            className={`text-blue-600 text-2xl ${
+              specificUser?.role !== "admin" ? "hidden" : ""
+            } `}
+          />
         </div>
+        {specificUser?.role === "admin" && user?.id as string === specificUser.id &&(
+          <Link href={"/admin-panel"} className="flex gap-2 items-center bg-blue-600 px-3 py-1 mt-2 transition-all hover:bg-blue-700">
+            <p>Go to admin panel</p>
+            <MdAdminPanelSettings className="text-2xl"/>
+          </Link>
+        )}
       </div>
       <div className="w-full max-w-[30rem] flex justify-center flex-col items-center">
         {posts.map((post) => (
-          <Post key={post._id} post={post} deletePost={deletePost} user={user}/>
+          <Post
+            key={post._id}
+            post={post}
+            deletePost={deletePost}
+            user={user}
+          />
         ))}
       </div>
     </div>
