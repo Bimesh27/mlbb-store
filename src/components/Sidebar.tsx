@@ -24,7 +24,7 @@ const Sidebar = () => {
   console.log(user);
 
   return (
-    <div className="border border-[#dadada18] h-screen fixed w-80 left-0 flex items-center flex-col gap-8 p-4 text-white">
+    <div className="border border-[#dadada18] h-screen fixed w-80 left-0 flex items-center flex-col gap-8 p-4 text-white z-50">
       {/* <div>
         <FaFantasyFlightGames className="text-5xl" />
       </div> */}
