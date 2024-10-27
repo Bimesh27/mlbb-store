@@ -15,7 +15,22 @@ export async function POST(request: Request) {
   try {
     const { price, description, images } = await request.json();
     if (!price || !description || !images || images.length === 0) {
-      return NextResponse.json("Please provide all fields", { status: 400 });
+      return NextResponse.json(
+        { message: "Please provide all fields", success: false },
+        { status: 400 }
+      );
+    }
+
+    if (images.length > 4) {
+      return NextResponse.json(
+        {
+          message: "You can only upload a maximum of 4 images",
+          success: false,
+        },
+        {
+          status: 400,
+        }
+      );
     }
 
     const imageUrls = [];
@@ -36,6 +51,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       message: "Account added successfully",
+      success: true,
       data: newAccount,
     });
   } catch (error) {
@@ -46,6 +62,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message: errorMessage,
+        success: false,
       },
       { status: 500 }
     );
