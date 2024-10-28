@@ -4,7 +4,7 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import { GrOverview } from "react-icons/gr";
 import User from "@/models/User";
 import UserPost from "@/models/UserPost";
-import MlAccount from "@/models/MlAccount";
+import MLAccount from "@/models/MLAccount";
 
 const AdminPage = () => {
   async function getUserCount() {
@@ -27,7 +27,7 @@ const AdminPage = () => {
 
   async function getStockAccountCount() {
     try {
-      const count = await MlAccount.countDocuments(); // Count all stock accounts
+      const count = await MLAccount.countDocuments(); // Count all stock accounts
       return count;
     } catch (error) {
       console.error("Error counting stock accounts:", error);
@@ -56,15 +56,24 @@ const AdminPage = () => {
 
         <div className="border w-[90%] h-full mt-4 flex justify-around p-10 border-[#dadada5c]">
           <div className="text-center">
-            <h1 className="text-xl font-semibold text-green-500"> No of Stock Account</h1>
+            <h1 className="text-xl font-semibold text-green-500">
+              {" "}
+              No of Stock Account
+            </h1>
             <p>{stockAccountCount}</p>
           </div>
           <div className="text-center">
-            <h1 className="text-xl font-semibold text-green-500"> No of Posts</h1>
+            <h1 className="text-xl font-semibold text-green-500">
+              {" "}
+              No of Posts
+            </h1>
             <p>{postCount}</p>
           </div>
           <div className="text-center">
-            <h1 className="text-xl font-semibold text-green-500"> No of Users</h1>
+            <h1 className="text-xl font-semibold text-green-500">
+              {" "}
+              No of Users
+            </h1>
             <p>{userCount}</p>
           </div>
         </div>

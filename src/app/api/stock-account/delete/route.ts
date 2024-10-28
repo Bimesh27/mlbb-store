@@ -1,4 +1,4 @@
-import MlAccount from "@/models/MlAccount";
+import MLAccount from "@/models/MLAccount";
 import { checkAdmin } from "@/utils/checkAdmin";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
@@ -19,7 +19,7 @@ export async function DELETE(request: Request) {
       return new Response("Please provide an ID", { status: 400 });
     }
 
-    const account = await MlAccount.findById(id);
+    const account = await MLAccount.findById(id);
     if (!account) {
       return new Response("Account not found", { status: 404 });
     }
@@ -40,7 +40,7 @@ export async function DELETE(request: Request) {
     }
 
     // Delete the account from the database
-    await MlAccount.findByIdAndDelete(id);
+    await MLAccount.findByIdAndDelete(id);
 
     return NextResponse.json(
       {

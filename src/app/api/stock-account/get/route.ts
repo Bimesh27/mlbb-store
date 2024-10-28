@@ -1,4 +1,4 @@
-import MlAccount from "@/models/MlAccount";
+import MLAccount from "@/models/MLAccount";
 import { authenticateUser } from "@/utils/authenticateUser";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   connectDB();
   try {
-    const stockAccounts = await MlAccount.find();
+    const stockAccounts = await MLAccount.find();
     if (!stockAccounts || stockAccounts.length === 0) {
       return NextResponse.json({
         status: 404,

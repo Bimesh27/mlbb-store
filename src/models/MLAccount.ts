@@ -1,7 +1,7 @@
 import { IMLAccount } from "@/types/IMLAccount";
 import mongoose, { Schema } from "mongoose";
 
-const MlAccountSchema: Schema<IMLAccount> = new Schema(
+const MLAccountSchema: Schema<IMLAccount> = new Schema(
   {
     price: {
       type: Number,
@@ -26,8 +26,8 @@ const MlAccountSchema: Schema<IMLAccount> = new Schema(
   { timestamps: true }
 );
 
-const MlAccount =
+const MLAccount =
   mongoose.models.MlAccount ||
-  mongoose.model<IMLAccount>("MlAccount", MlAccountSchema);
+  mongoose.model<IMLAccount>("MlAccount", MLAccountSchema);
 
-export default MlAccount;
+export default MLAccount;

@@ -1,4 +1,4 @@
-import MlAccount from "@/models/MlAccount";
+import MLAccount from "@/models/MLAccount";
 import { checkAdmin } from "@/utils/checkAdmin";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
@@ -33,7 +33,7 @@ export async function PUT(request: Request) {
       );
     }
 
-    const stockAccount = await MlAccount.findById(id);
+    const stockAccount = await MLAccount.findById(id);
     if (!stockAccount) {
       return NextResponse.json(
         { message: "Stock account not found" },

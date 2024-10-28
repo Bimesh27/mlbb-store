@@ -1,4 +1,4 @@
-import MlAccount from "@/models/MlAccount";
+import MLAccount from "@/models/MLAccount";
 import { checkAdmin } from "@/utils/checkAdmin";
 import cloudinary from "@/utils/cloudinary";
 import connectDB from "@/utils/db";
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       imageUrls.push(uploadedImage.secure_url);
     }
 
-    const newAccount = new MlAccount({
+    const newAccount = new MLAccount({
       price,
       description,
       images: imageUrls,
