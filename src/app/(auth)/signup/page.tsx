@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SignupPage() {
-  const { user, getCurrentUser, register } = useAuthStore();
+  const {getCurrentUser, register } = useAuthStore();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPass, setShowConfirmPass] = useState<boolean>(false);
 

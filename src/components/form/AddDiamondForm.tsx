@@ -55,8 +55,9 @@ const AddDiamondForm = () => {
       await addDiamond(formData);
 
       setFormData({ price: 0, amount: 0, bonus: 0 });
-    } catch (err) {
-      setError("Failed to add diamond package. Please try again.");
+    } catch (err : unknown) {
+      const errorMessage = err instanceof Error ? err.message : "An error occurred";
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

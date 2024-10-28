@@ -14,7 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 export default function SignupPage() {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [passwordError, setPasswordError] = useState<string>("");
   const router = useRouter();
   const {login, getCurrentUser} = useAuthStore();
 
