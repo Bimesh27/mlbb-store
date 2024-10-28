@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/authStore";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";

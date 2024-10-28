@@ -75,8 +75,9 @@ const UploadPostPage = () => {
       if (imageRef.current) {
         imageRef.current.value = "";
       }
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Failed to upload post");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to upload post";
+      setError(errorMessage);
     } finally {
       setIsUploading(false);
     }

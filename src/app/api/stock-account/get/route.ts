@@ -1,5 +1,4 @@
 import MLAccount from "@/models/MLAccount";
-import { authenticateUser } from "@/utils/authenticateUser";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 

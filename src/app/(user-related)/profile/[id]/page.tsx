@@ -5,7 +5,6 @@ import { userPostStore } from "@/store/postStore";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { MdAdminPanelSettings, MdVerified } from "react-icons/md";
-import { HiDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 
 const ProfilePage = () => {

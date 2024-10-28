@@ -14,7 +14,7 @@ const UserPost = () => {
       await Promise.all([getPost(), getCurrentUser()]);
     };
     fetchPostandUser();
-  }, []);
+  }, [getPost, getCurrentUser]);
 
   if (loading) {
     return (
