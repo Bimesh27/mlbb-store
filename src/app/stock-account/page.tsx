@@ -54,6 +54,9 @@ const StockAccountPage = () => {
   return (
     <div className="min-h-screen w-full text-white flex justify-center py-2 ">
       <div className="w-full sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%] flex flex-col gap-4">
+        <h1 className="font-semibold py-1 text-sm bg-blue-600 px-4 rounded-[2px] text-center">
+          Stock Accounts
+        </h1>
         {posts.map((post) => (
           <div
             key={post._id}
@@ -141,8 +144,7 @@ const StockAccountPage = () => {
         <DialogContent className="text-white">
           <DialogTitle>Delete Stock-account</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this ? This action cannot be
-            undone.
+            Are you sure you want to delete this ? This action cannot be undone.
           </DialogDescription>
           <DialogFooter className="flex flex-col gap-4">
             <DialogClose asChild>

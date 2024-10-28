@@ -63,7 +63,7 @@ const AddDiamondForm = () => {
   };
 
   return (
-    <div className="border rounded-lg w-full max-w-md p-8 flex flex-col bg-gray-900 border-gray-700">
+    <div className="border rounded-lg w-full max-w-md p-8 flex flex-col border-gray-700 justify-center min-w-[22rem] items-center">
       <h1 className="flex items-center gap-2 justify-center text-xl font-semibold text-white">
         Add Diamond Package
         <MdDiamond className="text-2xl text-blue-500" />
@@ -120,7 +120,7 @@ const AddDiamondForm = () => {
 
         <Button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !formData.price || !formData.amount || !formData.bonus}
           className="bg-blue-500 hover:bg-blue-600 px-8 py-2.5 font-semibold rounded-lg w-full disabled:opacity-50"
         >
           {isSubmitting ? "Adding..." : "Add Package"}

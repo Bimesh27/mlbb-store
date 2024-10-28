@@ -27,17 +27,22 @@ const UserPost = () => {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] text-white gradient-bg w-full flex  items-center flex-col justify-center">
-      {posts && posts.map((post) => (
-        <Post
-          post={post}
-          key={post._id}
-          deletePost={deletePost}
-          user={user}
-          getPost={getPost}
-          loading={loading}
-        />
-      ))}
-
+      <div>
+        <h1 className="font-semibold my-2 py-1 text-sm bg-blue-600 px-4 rounded-[2px] w-full text-center">
+          Posts
+        </h1>
+        {posts &&
+          posts.map((post) => (
+            <Post
+              post={post}
+              key={post._id}
+              deletePost={deletePost}
+              user={user}
+              getPost={getPost}
+              loading={loading}
+            />
+          ))}
+      </div>
     </div>
   );
 };

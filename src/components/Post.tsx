@@ -19,6 +19,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
+import LoadingBar from "./LoadingBar";
 
 interface Posts {
   _id: string;
@@ -66,9 +67,10 @@ const Post = ({ post, deletePost, user, getPost, loading }: PostProps) => {
 
   if (loading || isDeleting) {
     return (
-      <div className="h-screen w-full justify-center items-center text-white flex">
-        <h1>Loading...</h1>
-      </div>
+      // <div className="h-screen w-full justify-center items-center text-white flex">
+      //   <h1>Loading...</h1>
+      // </div>
+      <LoadingBar/>
     );
   }
   return (
