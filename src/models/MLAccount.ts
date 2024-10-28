@@ -1,4 +1,4 @@
-import { IMLAccount } from "@/types/MLAccount";
+import { IMLAccount } from "@/types/IMLAccount";
 import mongoose, { Schema } from "mongoose";
 
 const MlAccountSchema: Schema<IMLAccount> = new Schema(

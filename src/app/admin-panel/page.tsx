@@ -1,6 +1,5 @@
 import AddDiamondForm from "@/components/form/AddDiamondForm";
 import StockAccountForm from "@/components/form/StockAccountForm";
-import Sidebar from "@/components/Sidebar";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { GrOverview } from "react-icons/gr";
 import User from "@/models/User";
