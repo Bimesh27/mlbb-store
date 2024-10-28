@@ -22,15 +22,12 @@ export async function middleware(request: NextRequest) {
     }
 
     try {
-      const response = await fetch(
-        `${request.nextUrl.origin}/api/checkAdmin`,
-        {
-          cache: "no-store",
-          headers: {
-            Cookie: `token=${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${request.nextUrl.origin}/api/checkAdmin`, {
+        cache: "no-store",
+        headers: {
+          Cookie: `token=${token}`,
+        },
+      });
 
       const data = await response.json();
 
@@ -55,4 +52,4 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: ["/login", "/upload", "/admin-panel"],
-} as const;
+};
