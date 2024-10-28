@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SignupPage() {
-  const {getCurrentUser, register } = useAuthStore();
+  const { getCurrentUser, register } = useAuthStore();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPass, setShowConfirmPass] = useState<boolean>(false);
 
@@ -50,16 +50,10 @@ export default function SignupPage() {
       });
       router.push("/");
       getCurrentUser();
-    } catch (error: any) {
+    } catch (error: unknown) {
       // console.error("Signup failed. Please try again.");
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message); // Display the error message from the server if it exists
-      } else {
-        toast.error("Signup failed. Please try again."); // Fallback error message
+      if (error instanceof Error) {
+        toast.error(error.message);
       }
     } finally {
       setLoading(false);

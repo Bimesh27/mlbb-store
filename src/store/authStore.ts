@@ -49,9 +49,9 @@ const useAuthStore = create<AuthState>((set) => ({
       } else {
         throw new Error(response.data.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       const errorMessage =
-        error.response?.data?.message || error.message || "Registration failed";
+        error instanceof Error ? error.message : "Registration failed";
       set({ error: errorMessage });
       toast.error(errorMessage);
       return Promise.reject(errorMessage);
@@ -71,16 +71,16 @@ const useAuthStore = create<AuthState>((set) => ({
       } else {
         throw new Error(response?.data?.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       const errorMessage =
-        error?.response?.data?.message || error?.message || "Login failed";
+        error instanceof Error ? error.message : "Login failed";
       set({ error: errorMessage });
       return Promise.reject(errorMessage);
     } finally {
       set({ loading: false });
     }
   },
-  
+
   logout: async () => {
     set({ loading: true, error: null });
     try {
@@ -92,9 +92,9 @@ const useAuthStore = create<AuthState>((set) => ({
       } else {
         throw new Error(response.data.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       const errorMessage =
-        error.response?.data?.message || error.message || "Logout failed";
+        error instanceof Error ? error.message : "Logout failed";
       set({ error: errorMessage });
       return Promise.reject(errorMessage);
     } finally {
@@ -113,11 +113,10 @@ const useAuthStore = create<AuthState>((set) => ({
         set({ user: null });
         toast.error(response.data?.message || "Failed to fetch user data");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred while fetching user data.";
-      // toast.error(errorMessage);
+        error instanceof Error ? error.message : "Failed to fetch user data";
+      set({ error: errorMessage });
       set({ user: null });
     } finally {
       set({ loading: false });
@@ -129,7 +128,7 @@ const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await axios.get(`/api/get-user-by-id/${id}`);
       console.log("id", id);
-      
+
       if (response.data.success && response.data.user) {
         set({ specificUser: response.data.user });
       } else {
@@ -138,6 +137,7 @@ const useAuthStore = create<AuthState>((set) => ({
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "User not found";
+      set({ error: errorMessage });
     } finally {
       set({ loading: false });
     }

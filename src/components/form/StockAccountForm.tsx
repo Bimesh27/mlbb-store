@@ -125,8 +125,9 @@ const StockAccountForm = () => {
       // Reset form after successful upload
       setImages([]);
       setFormData({ description: "", price: "" });
-    } catch (err) {
-      setError("Failed to upload post. Please try again.");
+    } catch (err : unknown) {
+      const errorMessage = err instanceof Error ? err.message : "An error occurred";
+      setError(errorMessage);
     } finally {
       setIsUploading(false);
     }

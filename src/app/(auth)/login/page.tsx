@@ -31,7 +31,6 @@ export default function SignupPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setPasswordError("");
     try {
       setLoading(true);
       await login({
@@ -41,16 +40,10 @@ export default function SignupPage() {
       router.push("/");
       await getCurrentUser(); 
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       // console.error("Signup failed. Please try again.");
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message); // Display the error message from the server if it exists
-      } else {
-        toast.error("Login failed. Please try again."); // Fallback error message
+      if (error instanceof Error) {
+        toast.error(error.message);
       }
     } finally {
       setLoading(false);
