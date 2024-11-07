@@ -1,35 +1,34 @@
-import { NextRequest, NextResponse } from "next/server";
+import User from "@/models/User";
 import connectDB from "@/utils/db";
-import UserPost from "@/models/UserPost";
+import { NextResponse } from "next/server";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-export async function GET(request: NextRequest, { params }: Props) {
+export async function GET(_: Request, { params }: { params: { id: string } }) {
   await connectDB();
   try {
     const { id } = params;
 
-    const posts = await UserPost.find({ userId: id });
-
-    if (!posts || posts.length === 0) {
+    const user = await User.findById(id);
+    if (!user) {
       return NextResponse.json(
-        { message: "No posts found for this user", success: false },
+        { message: "User not found", success: false },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
-      message: "Posts found",
+      message: "User found",
       success: true,
-      posts,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        profilePicture: user.profilePicture,
+      },
     });
   } catch (error) {
     const errorMessage =
-      error instanceof Error ? error.message : "Failed to fetch posts";
+      error instanceof Error ? error.message : "User not found";
     return NextResponse.json(
       {
         success: false,
