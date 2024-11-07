@@ -1,15 +1,12 @@
 import UserPost from "@/models/UserPost";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-// Define a custom type for the expected context structure
-interface Context {
-  params: {
-    id: string;
-  };
-}
-
-export async function GET(request: Request, { params }: Context) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   await connectDB();
   try {
     const { id } = params;
