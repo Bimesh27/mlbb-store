@@ -2,12 +2,17 @@ import UserPost from "@/models/UserPost";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
-  // Ensure database connection
+// Define a custom type for the expected context structure
+interface Context {
+  params: {
+    id: string;
+  };
+}
+
+export async function GET(request: Request, { params }: Context) {
   await connectDB();
   try {
     const { id } = params;
-    // Fetch posts created by the user and populate the createdBy field
     const posts = await UserPost.find({ createdBy: id }).populate("createdBy");
 
     if (posts.length === 0) {
