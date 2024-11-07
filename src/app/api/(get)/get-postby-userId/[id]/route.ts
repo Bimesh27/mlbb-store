@@ -1,34 +1,41 @@
+// src/app/api/(get)/get-postby-userId/[id]/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import UserPost from "@/models/UserPost";
 import connectDB from "@/utils/db";
-import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export async function GET(request: NextRequest, { params }: Props) {
   await connectDB();
-
   try {
     const { id } = params;
 
     const posts = await UserPost.find({ createdBy: id }).populate("createdBy");
 
-    if (posts.length === 0) {
+    if (!posts || posts.length === 0) {
       return NextResponse.json(
-        { message: "No posts found", success: false },
+        { message: "No posts found for this user", success: false, posts },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(
-      { message: "Posts found", success: true, posts },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      message: "Posts found",
+      success: true,
+      posts,
+    });
   } catch (error) {
-    console.error("Error fetching posts:", error); // Log the error for debugging
-
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to fetch posts";
     return NextResponse.json(
-      { success: false, message: "An error occurred" },
+      {
+        success: false,
+        message: errorMessage,
+      },
       { status: 500 }
     );
   }
