@@ -1,13 +1,16 @@
 // app/api/users/[id]/route.ts
 import User from "@/models/User";
 import connectDB from "@/utils/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   await connectDB();
   try {
     const { id } = params;
-    
+
     const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
