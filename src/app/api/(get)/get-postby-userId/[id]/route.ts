@@ -3,10 +3,13 @@ import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export async function GET(request: NextRequest, { params }: Props) {
   await connectDB();
   try {
     const { id } = params;
