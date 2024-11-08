@@ -2,10 +2,13 @@ import User from "@/models/User";
 import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   await connectDB();
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const user = await User.findById(id);
     if (!user) {

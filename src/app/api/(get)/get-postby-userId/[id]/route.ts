@@ -4,10 +4,10 @@ import UserPost from "@/models/UserPost";
 import connectDB from "@/utils/db";
 
 
-export async function GET(request: NextRequest, { params }: {params: {id: string}}) {
+export async function GET(request: NextRequest, { params }: {params: Promise<{id: string}>}) {
   await connectDB();
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const posts = await UserPost.find({ createdBy: id }).populate("createdBy");
 
