@@ -4,23 +4,38 @@ import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 import cloudinary from "@/utils/cloudinary";
 
-export async function DELETE(request: Request): Promise<Response | boolean> {
+export async function DELETE(request: Request): Promise<Response> {
   await connectDB();
   const isAdmin = await checkAdmin();
   if (isAdmin.status !== 200) {
-    return false;
+    return NextResponse.json(
+      {
+        message: isAdmin.message,
+      },
+      { status: isAdmin.status }
+    );
   }
 
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (!id) {
-      return new Response("Please provide an ID", { status: 400 });
+      return NextResponse.json(
+        {
+          message: "Please provide an ID",
+        },
+        { status: 400 }
+      );
     }
 
     const account = await MLAccount.findById(id);
     if (!account) {
-      return new Response("Account not found", { status: 404 });
+      return NextResponse.json(
+        {
+          message: "Account not found",
+        },
+        { status: 404 }
+      );
     }
 
     // Delete associated Cloudinary images
