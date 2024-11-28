@@ -4,8 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navigation/Navbar";
 import { ToastContainer } from "react-toastify";
 import NavbarMobile from "@/components/Navigation/NavbarMobile";
-import { Suspense } from "react";
-import LoadingBar from "@/components/LoadingBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,7 +38,7 @@ export default function RootLayout({
           <NavbarMobile />
         </div>
         <div className="max-sm:mb-[4rem]">
-          <Suspense fallback={<LoadingBar />}>{children}</Suspense>
+          {children}
         </div>
         <ToastContainer autoClose={2000} />
       </body>
