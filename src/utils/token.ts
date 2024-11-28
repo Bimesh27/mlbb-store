@@ -14,12 +14,12 @@ interface CookieOptions {
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-export const generateTokenAndSetCookie = (payload: JWTPayload): void => {
+export const generateTokenAndSetCookie = async (payload: JWTPayload) => {
   if (!JWT_SECRET) {
     throw new Error("JWT_SECRET must be defined");
   }
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = jwt.sign(payload, JWT_SECRET!, { expiresIn: "3d" });
 
   const cookieOptions: CookieOptions = {
