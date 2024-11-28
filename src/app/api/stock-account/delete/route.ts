@@ -4,12 +4,11 @@ import connectDB from "@/utils/db";
 import { NextResponse } from "next/server";
 import cloudinary from "@/utils/cloudinary";
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: Request): Promise<Response | boolean> {
   await connectDB();
-
   const isAdmin = await checkAdmin();
   if (isAdmin.status !== 200) {
-    return isAdmin;
+    return false;
   }
 
   try {
@@ -45,7 +44,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         message: "Account deleted successfully",
-        success: false,
+        success: true, // Changed from false to true
       },
       { status: 200 }
     );
@@ -54,6 +53,7 @@ export async function DELETE(request: Request) {
       error instanceof Error
         ? error.message
         : "Unknown error when deleting account";
+
     return NextResponse.json(
       {
         message: errorMessage,
